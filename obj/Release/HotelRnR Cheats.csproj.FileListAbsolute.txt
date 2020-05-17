@@ -1,0 +1,6 @@
+C:\Users\marco\Desktop\BetterCollectibleModV2\Build\HotelRNRCheats.dll
+C:\Users\marco\Desktop\BetterCollectibleModV2\Build\HotelRNRCheats.pdb
+C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRnR Cheats.csproj.CoreCompileInputs.cache
+C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRNRCheats.dll
+C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRNRCheats.pdb
+C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRnR Cheats.csprojAssemblyReference.cache
