@@ -147,7 +147,7 @@ namespace Hotel_RNR_Cheats
 				MelonModLogger.Log("D To Show Debug stuff!");
 				MelonModLogger.Log("B To Kill all Headset Bounds!");
 				MelonModLogger.Log("C To Unlock Everything!");
-				MelonModLogger.Log("S To generate a Safe Code!");
+				MelonModLogger.Log("S To set 000 as Safe Code!");
 				MelonModLogger.Log("G To Enable GOD Mode!");
 
 				CommandsShown = true;
@@ -156,7 +156,7 @@ namespace Hotel_RNR_Cheats
 			if (Input.GetKeyDown(KeyCode.S))
 			{
 				MelonModLogger.Log(": Generating Safe Code....");
-				GenerateSafeCode();
+				SetSafeCode();
 			}
 
 
@@ -223,12 +223,12 @@ namespace Hotel_RNR_Cheats
 			}
 		}
 
-		private void GenerateSafeCode()
+		private void SetSafeCode()
 		{
 			if (pdata != null)
 			{
-				pdata.GenerateNewSafeCode();
-				MelonModLogger.Log("The new Safe Code is : " + pdata.currentSafeCode);
+				pdata.currentSafeCode = "000";
+				MelonModLogger.Log("The new Safe Code is set to  : " + pdata.currentSafeCode);
 			}
 
 		}
