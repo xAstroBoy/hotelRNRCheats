@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Il2CppSystem.Collections.Generic;
 using Il2CppSystem.Threading.Tasks;
 using MelonLoader;
@@ -22,10 +21,11 @@ namespace Hotel_RNR_Cheats
 	{
 		public bool isActive = true;
 		public bool CommandsShown = false;
+		private bool ShouldKillAllBoundsInstances = false;
 
-		private bool HeadsetColliderPatch = false;
+		private bool HeadsetColliderPatch = true;
 		private bool isGodMode = false;
-		private bool GenerateSafeKey = false;
+
 
 
 		private PlayerData pdata;
@@ -37,7 +37,6 @@ namespace Hotel_RNR_Cheats
 		private RNRPlayer player;
 		private RNRHand playerhand;
 		private RNRHead playerhead;
-		private Safe safegen;
 
 		public override void OnApplicationStart()
 		{
@@ -56,28 +55,13 @@ namespace Hotel_RNR_Cheats
 					CommandsShown = false;
 				}
 				else
-				{ 
+				{
 					MelonModLogger.Log(": Keybinds disabled");
 				}
 			}
 
 			if ((Time.time - LastTimeCheck2 > 25))
 			{
-				if (safegen == null)
-				{
-					if (safegen == null)
-					{
-						if (Resources.FindObjectsOfTypeAll(Il2CppTypeOf<Safe>.Type).Length != 0)
-						{
-							safegen = Resources.FindObjectsOfTypeAll(Il2CppTypeOf<Safe>.Type)[0].Cast<Safe>();
-							if (safegen != null)
-							{
-								DebugLog("Found Safe Instance!");
-							}
-						}
-					}
-				}
-
 				if (playerhead == null)
 				{
 					if (Resources.FindObjectsOfTypeAll(Il2CppTypeOf<RNRHead>.Type).Length != 0)
@@ -157,7 +141,7 @@ namespace Hotel_RNR_Cheats
 				return;
 
 
-			if(!CommandsShown)
+			if (!CommandsShown)
 			{
 				MelonModLogger.Log(": Keybinds enabled");
 				MelonModLogger.Log("D To Show Debug stuff!");
@@ -172,7 +156,7 @@ namespace Hotel_RNR_Cheats
 			if (Input.GetKeyDown(KeyCode.S))
 			{
 				MelonModLogger.Log(": Generating Safe Code....");
-				StartSafeGenerator();
+				GenerateSafeCode();
 			}
 
 
@@ -182,7 +166,7 @@ namespace Hotel_RNR_Cheats
 				if (isGodMode)
 				{
 					MelonModLogger.Log(": God Mode Enabled");
-					StartGodModeThread();
+					PlayerGod();
 				}
 				else
 				{
@@ -196,7 +180,7 @@ namespace Hotel_RNR_Cheats
 				if (HeadsetColliderPatch)
 				{
 					MelonModLogger.Log(": Headset Bounds are Disabled!");
-					StartRemoveHeadsetBounds();
+					KillAllHeadsetBounds();
 				}
 				else
 				{
@@ -224,62 +208,19 @@ namespace Hotel_RNR_Cheats
 				}
 			}
 
-		}
-
-
-		private void StartGodModeThread()
-		{
-			new Thread(() =>
+			if ((Time.time - LastTimeCheck > 15))
 			{
-				Thread.CurrentThread.IsBackground = true;
-				do
+				if (HeadsetColliderPatch)
 				{
-					try
-					{
-						Thread.Sleep(1500);
-						PlayerGod();
-					}
-					catch (Exception)
-					{
-					}
-				} while (isGodMode);
-			}).Start();
-		}
+					KillAllHeadsetBounds();
+				}
 
-
-		private void StartSafeGenerator()
-		{
-			new Thread(() =>
-			{
-				Thread.CurrentThread.IsBackground = true;
-					try
-					{
-						Thread.Sleep(1500);
-						GenerateSafeCode();
-					}
-					catch (Exception)
-					{
-					}
-			}).Start();
-		}
-
-		private void StartRemoveHeadsetBounds()
-		{
-			new Thread(() =>
-			{
-				Thread.CurrentThread.IsBackground = true;
-				do
+				if (isGodMode)
 				{
-					try
-					{
-						Thread.Sleep(1500);
-						KillAllHeadsetBounds();
-					}
-					catch (Exception)
-					{
-					}
-				} while (HeadsetColliderPatch);
-			}).Start();
+					PlayerGod();
+				}
+				LastTimeCheck = Time.time;
+			}
 		}
 
 		private void GenerateSafeCode()
@@ -331,17 +272,17 @@ namespace Hotel_RNR_Cheats
 		}
 		private void KillAllHeadsetBounds()
 		{
-			if(VrCollider != null)
+			if (VrCollider != null)
 			{
 				if (VrCollider.enabled)
 				{
 					DebugLog("Deactivating HeadsetCollider");
 					VrCollider.enabled = false;
 				}
-				if(VrCollider.armSwinger.headsetCollider.enabled)
+				if (VrCollider.armSwinger.headsetCollider.enabled)
 				{
 					DebugLog("Deactivating armSwinger Headset Collider");
-					VrCollider.armSwinger.headsetCollider.enabled= false;
+					VrCollider.armSwinger.headsetCollider.enabled = false;
 				}
 				DebugLog("Removing HeadsetCollider");
 				UnityEngine.Object.DestroyImmediate(VrCollider);
@@ -350,7 +291,7 @@ namespace Hotel_RNR_Cheats
 
 			if (armsw != null)
 			{
-				if(armsw.pushBackOverride)
+				if (armsw.pushBackOverride)
 				{
 					armsw.pushBackOverride = false;
 					DebugLog("Deactivating armSwinger pushBackOverride");
@@ -383,14 +324,12 @@ namespace Hotel_RNR_Cheats
 					DebugLog("Deactivating armSwinger Preventions");
 				}
 				armsw.PausePreventions(true);
-				DebugLog("Deactivating armSwinger");
-
 			}
 		}
 
 		private void UnlockAll()
 		{
-			if(pdata != null)
+			if (pdata != null)
 			{
 
 				pdata.infamy = int.MaxValue;
@@ -411,16 +350,11 @@ namespace Hotel_RNR_Cheats
 
 			}
 		}
-		
 
-		private void FindInstances()
-		{
-
-		}
 
 		private void DebugLog(string text)
 		{
-			if(isDebugMode)
+			if (isDebugMode)
 			{
 				MelonModLogger.Log(text);
 			}

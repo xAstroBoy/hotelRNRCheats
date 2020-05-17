@@ -4,3 +4,9 @@ C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRnR Cheats.csproj
 C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRNRCheats.dll
 C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRNRCheats.pdb
 C:\Users\marco\Desktop\BetterCollectibleModV2\obj\Release\HotelRnR Cheats.csprojAssemblyReference.cache
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\Build\HotelRNRCheats.dll
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\Build\HotelRNRCheats.pdb
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\obj\Release\HotelRnR Cheats.csprojAssemblyReference.cache
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\obj\Release\HotelRnR Cheats.csproj.CoreCompileInputs.cache
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\obj\Release\HotelRNRCheats.dll
+C:\Users\marco\Documents\GitHub\hotelRNRCheats\obj\Release\HotelRNRCheats.pdb
